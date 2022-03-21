@@ -22,7 +22,4 @@ public interface Passage extends Iterable<String> {
      * @return the number of words
      */
     int numWords();
-
-    @Override
-    String toString();
 }
