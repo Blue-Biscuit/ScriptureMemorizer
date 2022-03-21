@@ -12,8 +12,17 @@ public interface Passage extends Iterable<String> {
     String wordAt(int wordNum) throws NoWordFoundException;
 
     /**
+     * Gets the full text of the passage
+     * @return the full text
+     */
+    String fullText();
+
+    /**
      * The number of words in the passage
      * @return the number of words
      */
     int numWords();
+
+    @Override
+    String toString();
 }
