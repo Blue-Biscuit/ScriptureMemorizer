@@ -1,5 +1,6 @@
 package com.hufftech.memorization;
 
+import com.hufftech.passage.NoWordFoundException;
 import com.hufftech.passage.Passage;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,8 +26,17 @@ public class BlankingMemorizationGame extends MemorizationGame {
 
     }
 
-    public void blank(int index) {
+    /**
+     * Blanks the word at the index
+     * @param index the index to blank at
+     * @throws NoWordFoundException if the index is out of bounds
+     */
+    public void blank(int index) throws NoWordFoundException {
+        if (index >= _blanks.length || index < 0) {
+            throw new NoWordFoundException("Word number " + index + " is out of bounds for passage size " + _passage.numWords() + ".");
+        }
 
+        _blanks[index] = true;
     }
 
     @Override
