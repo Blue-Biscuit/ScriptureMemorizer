@@ -24,6 +24,11 @@ public abstract class MemorizationGame {
      */
     public abstract void next();
 
+    /**
+     * Resets the game
+     */
+    public abstract void reset();
+
     @Override
     public abstract String toString();
 
