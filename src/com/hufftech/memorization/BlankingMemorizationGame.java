@@ -5,6 +5,7 @@ import com.hufftech.passage.Passage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class BlankingMemorizationGame extends MemorizationGame {
 
@@ -12,11 +13,18 @@ public class BlankingMemorizationGame extends MemorizationGame {
         super(p);
 
         _blanks = new boolean[p.numWords()];
+        _rng = new Random();
     }
 
     @Override
     public void next() {
+        int blankIndex = _rng.nextInt(_blanks.length);
 
+        while (!fullyBlanked() && blanked(blankIndex)) {
+            blankIndex = _rng.nextInt(_blanks.length);
+        }
+
+        blank(blankIndex);
     }
 
     @Override
@@ -36,7 +44,32 @@ public class BlankingMemorizationGame extends MemorizationGame {
             throw new NoWordFoundException("Word number " + index + " is out of bounds for passage size " + _passage.numWords() + ".");
         }
 
-        _blanks[index] = true;
+        if (!_blanks[index]) {
+            _blanks[index] = true;
+            _numBlanks++;
+        }
+
+    }
+
+    /**
+     * True if the given word has been blanked.
+     * @param index The index at which to check.
+     * @throws NoWordFoundException If the index is out of bounds.
+     */
+    public boolean blanked(int index) throws NoWordFoundException {
+        if (index >= _blanks.length || index < 0) {
+            throw new NoWordFoundException("Word number " + index + " is out of bounds for passage size " + _passage.numWords() + ".");
+        }
+
+        return _blanks[index];
+    }
+
+    /**
+     * True if the passage has been fully blanked out.
+     * @return True if the passage has been fully blanked.
+     */
+    public boolean fullyBlanked() {
+        return _numBlanks == _blanks.length;
     }
 
     @Override
@@ -70,4 +103,6 @@ public class BlankingMemorizationGame extends MemorizationGame {
     }
 
     private final boolean[] _blanks;
+    private final Random _rng;
+    private int _numBlanks = 0;
 }
