@@ -1,6 +1,5 @@
 package com.hufftech.passage;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -10,7 +9,11 @@ import java.util.Iterator;
  */
 public class StringPassage implements Passage {
 
-    public StringPassage(@NotNull String text) {
+    public StringPassage(String text) throws NullPointerException {
+        if (text == null) {
+            throw new NullPointerException("Argument 'text' cannot be null.");
+        }
+
         _text = text.trim();
 
         _words = _text.split("\s");

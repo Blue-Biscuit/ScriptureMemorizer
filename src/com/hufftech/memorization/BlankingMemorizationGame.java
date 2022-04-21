@@ -2,14 +2,13 @@ package com.hufftech.memorization;
 
 import com.hufftech.passage.NoWordFoundException;
 import com.hufftech.passage.Passage;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class BlankingMemorizationGame extends MemorizationGame {
 
-    public BlankingMemorizationGame(@NotNull Passage p) {
+    public BlankingMemorizationGame(Passage p) {
         super(p);
 
         _blanks = new boolean[p.numWords()];
