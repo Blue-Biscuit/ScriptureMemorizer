@@ -10,7 +10,7 @@ public abstract class Command {
      * @throws CommandSyntaxException If the syntax for the command is incorrect
      * @return The result of the command
      */
-    abstract Object call(String[] args) throws CommandSyntaxException;
+    abstract Object call(String[] args, Object input) throws CommandSyntaxException;
 
     /**
      * Gets the name of the command

@@ -1,6 +1,9 @@
 package net.ahuffman.cli;
 
+import net.ahuffman.passage.Passage;
 import net.ahuffman.passage.StringPassage;
+
+import java.util.ArrayList;
 
 /**
  * Command to create a new command
@@ -16,12 +19,18 @@ public class NewPassageCommand extends Command {
      * @throws CommandSyntaxException If the syntax of the command is incorrect
      */
     @Override
-    Object call(String[] args) throws CommandSyntaxException {
-        if (args.length < 2) {
+    Object call(String[] args, Object input) throws CommandSyntaxException {
+        if (args.length < 3) {
             throw new CommandSyntaxException("Not enough arguments");
         }
 
-        return new StringPassage(args[0], args[1]);
+        ArrayList<Passage> p = (ArrayList<Passage>) input;
+        Passage result = new StringPassage(args[1], args[2]);
+
+        p.add(result);
+
+        return result;
+
     }
 
     @Override
