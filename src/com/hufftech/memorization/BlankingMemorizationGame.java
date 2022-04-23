@@ -102,6 +102,11 @@ public class BlankingMemorizationGame extends MemorizationGame {
         return sb.toString();
     }
 
+    @Override
+    public boolean done() {
+        return false;
+    }
+
     private final boolean[] _blanks;
     private final Random _rng;
     private int _numBlanks = 0;
