@@ -21,7 +21,9 @@ public class Test {
         System.out.print(">>> ");
         passageText = s.nextLine();
 
-        savePath = name + ".dat";
+        System.out.println("Enter the filepath to save to.");
+        System.out.print(">>> ");
+        savePath = s.nextLine();
 
         Passage p = new StringPassage(name, passageText);
         p.saveToFile(new File(savePath));
