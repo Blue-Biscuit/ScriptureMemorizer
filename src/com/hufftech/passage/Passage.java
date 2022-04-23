@@ -3,23 +3,41 @@ package com.hufftech.passage;
 /**
  * An interface for a passage of text.
  */
-public interface Passage extends Iterable<String> {
+public abstract class Passage implements Iterable<String> {
+    /**
+     * Constructor for Passage class.
+     * @param title Title field.
+     */
+    public Passage(String title) {
+        _title = title;
+    }
+
     /**
      * Gets the word at the given number
      * @param wordNum the word number to get
      * @return the word at the index
      */
-    String wordAt(int wordNum) throws NoWordFoundException;
+    public abstract String wordAt(int wordNum) throws NoWordFoundException;
 
     /**
      * Gets the full text of the passage
      * @return the full text
      */
-    String fullText();
+    public abstract String fullText();
 
     /**
      * The number of words in the passage
      * @return the number of words
      */
-    int numWords();
+    public abstract int numWords();
+
+    /**
+     * Gets the title of the passage.
+     * @return The title.
+     */
+    public String getTitle() {
+        return _title;
+    }
+
+    private final String _title;
 }
