@@ -2,6 +2,8 @@ package com.hufftech.passage;
 
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.io.File;
@@ -45,6 +47,37 @@ public class StringPassage extends Passage {
 
     @Override
     public void saveToFile(File file) throws SavePassageException {
+        FileWriter fw;
+
+        try {
+            fw = new FileWriter(file, true);
+        }
+        catch (IOException e) {
+            throw new SavePassageException("Error opening file");
+        }
+
+        try {
+
+            fw.write(getTitle());
+            fw.write('\n');
+            fw.write('\"');
+            fw.write(_text);
+            fw.write('\"');
+            fw.write('\n');
+
+        }
+        catch (IOException e) {
+            throw new SavePassageException(e.getMessage());
+        }
+        finally {
+            try {
+                fw.close();
+            }
+            catch (IOException e) {
+                throw new SavePassageException("Error closing file");
+            }
+        }
+
 
     }
 
