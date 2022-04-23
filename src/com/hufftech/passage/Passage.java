@@ -1,5 +1,7 @@
 package com.hufftech.passage;
 
+import java.io.File;
+
 /**
  * An interface for a passage of text.
  */
@@ -42,17 +44,17 @@ public abstract class Passage implements Iterable<String> {
     /**
      * Saves the passage to the filepath. If the filepath doesn't exist, the file
      * is created. If it does, it is overwritten.
-     * @param filepath the filepath to save to.
+     * @param file the file to save to.
      * @throws SavePassageException If there's an error saving.
      */
-    public abstract void saveToFile(String filepath) throws SavePassageException;
+    public abstract void saveToFile(File file) throws SavePassageException;
 
     /**
      * Loads a passage from a filepath.
-     * @param filepath The filepath to load from.
+     * @param file The file to load from.
      * @throws LoadPassageException If there is an error in loading.
      */
-    public abstract void loadFromFile(String filepath) throws LoadPassageException;
+    protected abstract void loadFromFile(File file) throws LoadPassageException;
 
     private final String _title;
 }

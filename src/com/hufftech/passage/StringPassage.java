@@ -15,13 +15,11 @@ public class StringPassage extends Passage {
     public StringPassage(String title, String text) throws NullPointerException {
         super(title);
 
-        if (text == null) {
-            throw new NullPointerException("Argument 'text' cannot be null.");
-        }
+        load(text);
+    }
 
-        _text = text.trim();
-
-        _words = _text.split("\s");
+    public StringPassage(String title, File file) {
+        super(title);
     }
 
     @Override
@@ -44,18 +42,17 @@ public class StringPassage extends Passage {
     }
 
     @Override
-    public void saveToFile(String filepath) throws SavePassageException {
+    public void saveToFile(File file) throws SavePassageException {
 
     }
 
     @Override
-    public void loadFromFile(String filepath) throws LoadPassageException {
-        File f = new File(filepath);
+    protected void loadFromFile(File file) throws LoadPassageException {
         Scanner reader;
 
         // Get the file.
         try {
-            reader = new Scanner(f);
+            reader = new Scanner(file);
         }
         catch (FileNotFoundException e) {
             throw new LoadPassageException("File does not exist");
@@ -102,10 +99,16 @@ public class StringPassage extends Passage {
         return fullText();
     }
 
-    private void load(String passageText) {
+    private void load(String text) {
+        if (text == null) {
+            throw new NullPointerException("Argument 'text' cannot be null.");
+        }
 
+        _text = text.trim();
+
+        _words = _text.split("\s");
     }
 
-    private final String _text;
-    private final String[] _words;
+    private String _text;
+    private String[] _words;
 }
