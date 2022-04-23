@@ -58,6 +58,7 @@ public class StringPassage extends Passage {
 
         try {
 
+            fw.write("title: ");
             fw.write(getTitle());
             fw.write('\n');
             fw.write('\"');

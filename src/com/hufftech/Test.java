@@ -7,41 +7,32 @@ import com.hufftech.memorization.MemorizationGame;
 import com.hufftech.passage.Passage;
 import com.hufftech.passage.StringPassage;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
+        String name;
+        String passageText;
+        String savePath;
 
-        System.out.print("Enter the passage to memorize: ");
-        String input = s.nextLine();
+        System.out.println("Enter the name of your new passage.");
+        System.out.print(">>> ");
+        name = s.nextLine();
 
-        Passage myPassage = new StringPassage("test title", input);
-        MemorizationGame myGame = new FreeRecallMemorizationGame(myPassage);
-        MemorizationGamePlayer player = new MemorizationGamePlayer(myGame);
+        System.out.println("Enter the text of your new passage.");
+        System.out.print(">>> ");
+        passageText = s.nextLine();
 
-        while (!myGame.done()) {
-            System.out.println("Turn " + player.getTurn());
-            System.out.println(myGame);
-            System.out.println();
-            System.out.print(">>> ");
+        savePath = name + ".dat";
 
-            input = s.nextLine();
-            boolean result = player.next(input);
+        Passage p = new StringPassage(name, passageText);
+        p.saveToFile(new File(savePath));
 
-            if (result) {
-                System.out.println("Hooray!!");
-            }
-            else {
-                System.out.println("Ohhh...");
-            }
-
-            System.out.println();
-        }
-
-        System.out.println("Statistics: ");
-        System.out.println("\tTurns taken: " + player.getTurn());
-        System.out.println("\tSuccesses: " + player.getSuccesses());
-        System.out.println("\tFails: " + player.getFails());
+        Passage load = new StringPassage(name, new File(savePath));
+        System.out.println("Echo:");
+        System.out.println(load.getTitle());
+        System.out.println(load.fullText());
     }
 }
