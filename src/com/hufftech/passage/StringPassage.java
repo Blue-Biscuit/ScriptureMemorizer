@@ -20,6 +20,8 @@ public class StringPassage extends Passage {
 
     public StringPassage(String title, File file) {
         super(title);
+
+        loadFromFile(file);
     }
 
     @Override
