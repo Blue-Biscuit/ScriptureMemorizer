@@ -33,6 +33,12 @@ public abstract class MemorizationGame {
     public abstract String toString();
 
     /**
+     * True if the game is done.
+     * @return True if the game is done.
+     */
+    public abstract boolean done();
+
+    /**
      * True if the input string matches the passage
      * @param input the input string
      * @return true if the string matches, false otherwise (or if input is null)

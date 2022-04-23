@@ -17,13 +17,22 @@ public class BlankingMemorizationGame extends MemorizationGame {
 
     @Override
     public void next() {
-        int blankIndex = _rng.nextInt(_blanks.length);
-
-        while (!fullyBlanked() && blanked(blankIndex)) {
-            blankIndex = _rng.nextInt(_blanks.length);
+        // If the value was fully blanked last time, then the game is over.
+        if (fullyBlanked()) {
+            _done = true;
         }
 
-        blank(blankIndex);
+        // Otherwise, blank a random word.
+        else {
+            int blankIndex = _rng.nextInt(_blanks.length);
+
+            while (blanked(blankIndex)) {
+                blankIndex = _rng.nextInt(_blanks.length);
+            }
+
+            blank(blankIndex);
+        }
+
     }
 
     @Override
@@ -102,7 +111,13 @@ public class BlankingMemorizationGame extends MemorizationGame {
         return sb.toString();
     }
 
+    @Override
+    public boolean done() {
+        return _done;
+    }
+
     private final boolean[] _blanks;
     private final Random _rng;
     private int _numBlanks = 0;
+    private boolean _done = false;
 }

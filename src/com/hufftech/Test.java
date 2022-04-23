@@ -19,7 +19,7 @@ public class Test {
         BlankingMemorizationGame myGame = new BlankingMemorizationGame(myPassage);
         MemorizationGamePlayer player = new MemorizationGamePlayer(myGame);
 
-        while (!myGame.fullyBlanked()) {
+        while (!myGame.done()) {
             System.out.println("Turn " + player.getTurn());
             System.out.println(myGame);
             System.out.println();
