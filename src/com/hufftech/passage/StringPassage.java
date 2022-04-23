@@ -41,6 +41,16 @@ public class StringPassage extends Passage {
     }
 
     @Override
+    public void saveToFile(String filepath) throws SavePassageException {
+
+    }
+
+    @Override
+    public void loadFromFile(String filepath) throws LoadPassageException {
+
+    }
+
+    @Override
     public Iterator<String> iterator() {
         return Arrays.stream(_words).iterator();
     }

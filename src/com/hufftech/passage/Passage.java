@@ -39,5 +39,20 @@ public abstract class Passage implements Iterable<String> {
         return _title;
     }
 
+    /**
+     * Saves the passage to the filepath. If the filepath doesn't exist, the file
+     * is created. If it does, it is overwritten.
+     * @param filepath the filepath to save to.
+     * @throws SavePassageException If there's an error saving.
+     */
+    public abstract void saveToFile(String filepath) throws SavePassageException;
+
+    /**
+     * Loads a passage from a filepath.
+     * @param filepath The filepath to load from.
+     * @throws LoadPassageException If there is an error in loading.
+     */
+    public abstract void loadFromFile(String filepath) throws LoadPassageException;
+
     private final String _title;
 }

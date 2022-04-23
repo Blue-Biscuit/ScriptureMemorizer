@@ -2,6 +2,7 @@ package com.hufftech;
 
 import com.hufftech.gameplay.MemorizationGamePlayer;
 import com.hufftech.memorization.BlankingMemorizationGame;
+import com.hufftech.memorization.FreeRecallMemorizationGame;
 import com.hufftech.memorization.MemorizationGame;
 import com.hufftech.passage.Passage;
 import com.hufftech.passage.StringPassage;
@@ -16,7 +17,7 @@ public class Test {
         String input = s.nextLine();
 
         Passage myPassage = new StringPassage("test title", input);
-        BlankingMemorizationGame myGame = new BlankingMemorizationGame(myPassage);
+        MemorizationGame myGame = new FreeRecallMemorizationGame(myPassage);
         MemorizationGamePlayer player = new MemorizationGamePlayer(myGame);
 
         while (!myGame.done()) {
