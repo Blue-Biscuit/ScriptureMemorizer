@@ -1,4 +1,4 @@
-package com.hufftech.passage;
+package net.ahuffman.passage;
 
 /**
  * Exception for if a word (or a word index) does not exist

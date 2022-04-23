@@ -1,6 +1,6 @@
-package com.hufftech.gameplay;
+package net.ahuffman.gameplay;
 
-import com.hufftech.memorization.MemorizationGame;
+import net.ahuffman.memorization.MemorizationGame;
 
 /**
  * A simple "scoring" class which keeps track of play data about a certain memorization game.

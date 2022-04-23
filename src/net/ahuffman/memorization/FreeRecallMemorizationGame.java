@@ -1,6 +1,6 @@
-package com.hufftech.memorization;
+package net.ahuffman.memorization;
 
-import com.hufftech.passage.Passage;
+import net.ahuffman.passage.Passage;
 
 /**
  * A simple free recall memorization game. The game ends on the first

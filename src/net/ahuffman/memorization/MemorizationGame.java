@@ -1,6 +1,6 @@
-package com.hufftech.memorization;
+package net.ahuffman.memorization;
 
-import com.hufftech.passage.Passage;
+import net.ahuffman.passage.Passage;
 
 /**
  * An abstract memorization game class

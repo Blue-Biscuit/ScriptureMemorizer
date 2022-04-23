@@ -1,11 +1,7 @@
-package com.hufftech;
+package net.ahuffman;
 
-import com.hufftech.gameplay.MemorizationGamePlayer;
-import com.hufftech.memorization.BlankingMemorizationGame;
-import com.hufftech.memorization.FreeRecallMemorizationGame;
-import com.hufftech.memorization.MemorizationGame;
-import com.hufftech.passage.Passage;
-import com.hufftech.passage.StringPassage;
+import net.ahuffman.passage.Passage;
+import net.ahuffman.passage.StringPassage;
 
 import java.io.File;
 import java.util.Scanner;

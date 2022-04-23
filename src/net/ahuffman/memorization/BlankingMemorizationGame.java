@@ -1,7 +1,7 @@
-package com.hufftech.memorization;
+package net.ahuffman.memorization;
 
-import com.hufftech.passage.NoWordFoundException;
-import com.hufftech.passage.Passage;
+import net.ahuffman.passage.NoWordFoundException;
+import net.ahuffman.passage.Passage;
 
 import java.util.Arrays;
 import java.util.Random;

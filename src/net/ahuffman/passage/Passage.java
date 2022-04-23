@@ -1,4 +1,4 @@
-package com.hufftech.passage;
+package net.ahuffman.passage;
 
 import java.io.File;
 
