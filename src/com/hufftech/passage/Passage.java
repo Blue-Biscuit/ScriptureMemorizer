@@ -1,5 +1,7 @@
 package com.hufftech.passage;
 
+import java.io.File;
+
 /**
  * An interface for a passage of text.
  */
@@ -38,6 +40,21 @@ public abstract class Passage implements Iterable<String> {
     public String getTitle() {
         return _title;
     }
+
+    /**
+     * Saves the passage to the filepath. If the filepath doesn't exist, the file
+     * is created. If it does, it is overwritten.
+     * @param file the file to save to.
+     * @throws SavePassageException If there's an error saving.
+     */
+    public abstract void saveToFile(File file) throws SavePassageException;
+
+    /**
+     * Loads a passage from a filepath.
+     * @param file The file to load from.
+     * @throws LoadPassageException If there is an error in loading.
+     */
+    protected abstract void loadFromFile(File file) throws LoadPassageException;
 
     private final String _title;
 }
