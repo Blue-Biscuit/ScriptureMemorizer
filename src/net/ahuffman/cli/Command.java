@@ -5,26 +5,22 @@ package net.ahuffman.cli;
  */
 public abstract class Command {
     /**
-     * Constructor
-     * @param name The name of the command, by which to call it.
-     */
-    public Command(String name) {
-        _name = name;
-    }
-
-    /**
      * Abstract method to perform the command
      * @param args The arguments of the command
+     * @throws CommandSyntaxException If the syntax for the command is incorrect
+     * @return The result of the command
      */
-    abstract void call(String[] args);
+    abstract Object call(String[] args) throws CommandSyntaxException;
 
     /**
      * Gets the name of the command
      * @return The name
      */
-    public String getName() {
-        return _name;
-    }
+    public abstract String getName();
 
-    private final String _name;
+    /**
+     * Usage print of the command
+     * @return The usage print
+     */
+    public abstract String usagePrint();
 }
