@@ -1,8 +1,11 @@
 package com.hufftech.passage;
 
 
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.io.File;
+import java.util.Scanner;
 
 /**
  * A passage implementation using a simple String.
@@ -47,7 +50,46 @@ public class StringPassage extends Passage {
 
     @Override
     public void loadFromFile(String filepath) throws LoadPassageException {
+        File f = new File(filepath);
+        Scanner reader;
 
+        // Get the file.
+        try {
+            reader = new Scanner(f);
+        }
+        catch (FileNotFoundException e) {
+            throw new LoadPassageException("File does not exist");
+        }
+
+        // find the passage within the database file.
+        String passage = null;
+        boolean found = false;
+        String line;
+        while (passage == null && reader.hasNextLine()) {
+            line = reader.nextLine().trim();
+
+            // If the previous line was the title, load the passage.
+            if (found) {
+                try {
+                    passage = line.substring(1, line.length() - 1);
+                }
+                catch (IndexOutOfBoundsException e) {
+                    throw new LoadPassageException("Passage file is corrupted.");
+                }
+            }
+
+            // If this line is the title, mark the next for passage loading.
+            else if (line.equals("title: " + getTitle())) {
+                found = true;
+            }
+        }
+
+        if (passage == null) {
+            throw new LoadPassageException("Passage was not saved at that file.");
+        }
+        else {
+            load(passage);
+        }
     }
 
     @Override
@@ -58,6 +100,10 @@ public class StringPassage extends Passage {
     @Override
     public String toString() {
         return fullText();
+    }
+
+    private void load(String passageText) {
+
     }
 
     private final String _text;
