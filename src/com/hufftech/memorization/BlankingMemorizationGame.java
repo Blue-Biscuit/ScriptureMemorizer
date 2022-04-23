@@ -74,6 +74,7 @@ public class BlankingMemorizationGame extends MemorizationGame {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append(_passage.getTitle()).append('\n');
 
         for (int i = 0; i < _blanks.length - 1; i++) {
 

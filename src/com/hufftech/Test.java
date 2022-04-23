@@ -15,7 +15,7 @@ public class Test {
         System.out.print("Enter the passage to memorize: ");
         String input = s.nextLine();
 
-        Passage myPassage = new StringPassage(input);
+        Passage myPassage = new StringPassage("test title", input);
         BlankingMemorizationGame myGame = new BlankingMemorizationGame(myPassage);
         MemorizationGamePlayer player = new MemorizationGamePlayer(myGame);
 

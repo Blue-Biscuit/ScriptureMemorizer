@@ -7,9 +7,11 @@ import java.util.Iterator;
 /**
  * A passage implementation using a simple String.
  */
-public class StringPassage implements Passage {
+public class StringPassage extends Passage {
 
-    public StringPassage(String text) throws NullPointerException {
+    public StringPassage(String title, String text) throws NullPointerException {
+        super(title);
+
         if (text == null) {
             throw new NullPointerException("Argument 'text' cannot be null.");
         }
