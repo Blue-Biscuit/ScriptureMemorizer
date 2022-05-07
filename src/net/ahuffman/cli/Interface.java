@@ -33,36 +33,28 @@ public class Interface {
         // Setup list of passages.
         p = new PassagesList();
 
+        // Initialize the currently loaded command; this should be immediately overriden.
+        Command dummy = new NewPassageCommand();
+        Command c = dummy;
+
         // Command loop.
-        while (true) {
-            String input = getInput(">>> ", s);
-            Command c = null;
-            int firstSpace = input.indexOf("\s");
-            String commandName;
-            String arguments;
+        while (!c.getName().equals("exit")) {
+            UserInput input = new UserInput(getInput(">>> ", s));
 
-            // Parse the command string.
-            if (firstSpace == -1) {
-                commandName = input;
-                arguments = "";
-            }
-            else {
-                commandName = input.substring(0, firstSpace);
-                arguments = input.substring(firstSpace + 1);
-            }
-
+            c = null;
             for (Command e : commands) {
-                if (e.getName().equals(commandName)) {
+                if (e.getName().equals(input.getCommand())) {
                     c = e;
                     break;
                 }
             }
 
             if (c == null) {
-
+                System.out.printf("Unknown command: %s\n\n", input.getCommand());
+                c = dummy;
             }
             else {
-                c.execute(arguments, p);
+                c.execute(input.getArgs(), p);
             }
         }
     }
