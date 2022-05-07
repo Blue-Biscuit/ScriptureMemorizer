@@ -72,6 +72,30 @@ public class TagList {
     }
 
     /**
+     * Removes the given tag.
+     * @param tag The tag to remove.
+     * @throws InvalidTagException If the list does not contain the tag.
+     */
+    public void removeTag(String tag) throws InvalidTagException {
+        Integer result = null;
+
+        for (int i = 0; i < _tags.size() && result == null; i++) {
+            String e = _tags.get(i);
+
+            if (e.equals(tag)) {
+                result = i;
+            }
+        }
+
+        if (result == null) {
+            throw new InvalidTagException("Tags list did not contain the tag " + tag);
+        }
+        else {
+            _tags.remove(result.intValue());
+        }
+    }
+
+    /**
      * Return a list of all tags which start with a certain prefix.
      * @param prefix The prefix to check by.
      * @return An arraylist of all of the results.
