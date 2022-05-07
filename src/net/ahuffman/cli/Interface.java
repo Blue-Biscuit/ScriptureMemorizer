@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Interface {
     public static void loadCommands(ArrayList<Command> commands) {
         commands.add(new NewPassageCommand());
+        commands.add(new ExitCommand());
+        commands.add(new PrintCommand());
     }
 
     public static String getInput(String promptPattern, Scanner s) {
@@ -41,6 +43,7 @@ public class Interface {
         while (!c.getName().equals("exit")) {
             UserInput input = new UserInput(getInput(">>> ", s));
 
+            // Get the command.
             c = null;
             for (Command e : commands) {
                 if (e.getName().equals(input.getCommand())) {
@@ -49,12 +52,21 @@ public class Interface {
                 }
             }
 
-            if (c == null) {
-                System.out.printf("Unknown command: %s\n\n", input.getCommand());
-                c = dummy;
+            // Run commands.
+            try {
+                if (c == null) {
+                    System.out.printf("Unknown command: %s\n\n", input.getCommand());
+                    c = dummy;
+                } else if (c.getName().equals("print")) {
+                    c.execute(input.getArgs(), new Object[]{System.out, p});
+                } else {
+                    c.execute(input.getArgs(), new Object[]{p});
+                }
+                System.out.println();
             }
-            else {
-                c.execute(input.getArgs(), p);
+            catch (InvalidCommandOperationException e) {
+                System.out.printf("%s\n\n", e.getMessage());
+                c = dummy;
             }
         }
     }

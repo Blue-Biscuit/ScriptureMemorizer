@@ -5,7 +5,7 @@ import net.ahuffman.passage.StringPassage;
 
 public class NewPassageCommand extends Command {
     private static final String NAME = "new";
-    private static final String HELP = "<title> <passage>";
+    private static final String HELP = "<title> <passage text>";
 
     public NewPassageCommand() {
         super(NAME, HELP);
@@ -13,9 +13,12 @@ public class NewPassageCommand extends Command {
 
 
     @Override
-    public Object execute(String args, Object input) {
-        if (!(input instanceof PassagesList)) {
+    public Object execute(String args, Object[] input) {
+        if (!(input[0] instanceof PassagesList)) {
             throw new InvalidCommandOperationException("Internal error.");
+        }
+        if (args.isEmpty()) {
+            throw new InvalidCommandOperationException(String.format("Usage: %s %s", getName(), getHelp()));
         }
 
         String name;
@@ -28,7 +31,7 @@ public class NewPassageCommand extends Command {
 
         // If firstSpace is not found, then return an error.
         if (firstSpace == -1) {
-            throw new InvalidCommandOperationException("Too few arguments.");
+            throw new InvalidCommandOperationException(String.format("Usage: %s %s", getName(), getHelp()));
         }
 
         // Split the arguments into two name and passage.
@@ -36,7 +39,7 @@ public class NewPassageCommand extends Command {
         passage = args.substring(firstSpace + 1);
         p = new StringPassage(name, passage);
 
-        ((PassagesList) input).add(p);
+        ((PassagesList) input[0]).add(p);
 
         return input;
     }

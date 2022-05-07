@@ -16,5 +16,15 @@ public class PassagesList {
         _passages.add(p);
     }
 
+    public Passage get(String name) {
+        for (Passage e : _passages) {
+            if (e.getTitle().equals(name)) {
+                return e;
+            }
+        }
+
+        return null;
+    }
+
     private final ArrayList<Passage> _passages;
 }

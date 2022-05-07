@@ -33,7 +33,7 @@ public abstract class Command {
      * @param input The internal inputs of the command.
      * @return The output of the command.
      */
-    public abstract Object execute(String args, Object input) throws InvalidCommandOperationException;
+    public abstract Object execute(String args, Object[] input) throws InvalidCommandOperationException;
 
     @Override
     public String toString() {
