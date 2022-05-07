@@ -29,10 +29,11 @@ public abstract class Command {
 
     /**
      * Abstract method to execute the command.
-     * @param inputs The inputs of the command.
+     * @param args The user-provided arguments to the command.
+     * @param input The internal inputs of the command.
      * @return The output of the command.
      */
-    public abstract Object execute(Object inputs);
+    public abstract Object execute(String args, Object input) throws InvalidCommandOperationException;
 
     @Override
     public String toString() {
