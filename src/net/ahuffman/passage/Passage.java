@@ -12,6 +12,7 @@ public abstract class Passage implements Iterable<String> {
      */
     public Passage(String title) {
         _title = title;
+        _tags = new TagList();
     }
 
     /**
@@ -57,4 +58,5 @@ public abstract class Passage implements Iterable<String> {
     protected abstract void loadFromFile(File file) throws LoadPassageException;
 
     private final String _title;
+    private final TagList _tags;
 }
