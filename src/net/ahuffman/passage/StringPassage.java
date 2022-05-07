@@ -66,6 +66,18 @@ public class StringPassage extends Passage {
             fw.write('\"');
             fw.write('\n');
 
+            TagList t = getTags();
+            int tLen = t.numTags();
+
+            if (tLen > 0) {
+                for (int i = 0; i < tLen - 1; i++) {
+                    fw.write(t.getTag(i));
+                    fw.write(' ');
+                }
+                fw.write(t.getTag(tLen - 1));
+            }
+            fw.write('\n');
+
         }
         catch (IOException e) {
             throw new SavePassageException(e.getMessage());
@@ -96,32 +108,51 @@ public class StringPassage extends Passage {
 
         // find the passage within the database file.
         String passage = null;
-        boolean found = false;
+        String tags = null;
+        boolean foundLastLine = false;
+        boolean loadedPassageLastLine = false;
         String line;
-        while (passage == null && reader.hasNextLine()) {
+
+        // While everything has not yet been loaded and the file hasn't finished...
+        while (tags == null && reader.hasNextLine()) {
             line = reader.nextLine().trim();
 
             // If the previous line was the title, load the passage.
-            if (found) {
+            if (foundLastLine) {
                 try {
                     passage = line.substring(1, line.length() - 1);
+                    loadedPassageLastLine = true;
+                    foundLastLine = false;
                 }
                 catch (IndexOutOfBoundsException e) {
                     throw new LoadPassageException("Passage file is corrupted.");
                 }
             }
 
+            // If the previous line was the passage, load the tags.
+            else if (loadedPassageLastLine) {
+                tags = line;
+            }
+
             // If this line is the title, mark the next for passage loading.
             else if (line.equals("title: " + getTitle())) {
-                found = true;
+                foundLastLine = true;
             }
         }
 
-        if (passage == null) {
+        if (passage == null || tags == null) {
             throw new LoadPassageException("Passage was not saved at that file.");
         }
         else {
+            // Load the passage text
             load(passage);
+
+            // Load the tags
+            TagList internalList = getTags();
+            String[] tList = tags.split("\s");
+            for(String e : tList) {
+                internalList.addTag(e);
+            }
         }
     }
 
