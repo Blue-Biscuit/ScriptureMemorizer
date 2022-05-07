@@ -58,9 +58,6 @@ public class TagList {
         return _tags.get(index);
     }
 
-
-
-
     /**
      * Return a list of all tags which start with a certain prefix.
      * @param prefix The prefix to check by.
@@ -75,6 +72,21 @@ public class TagList {
         });
 
         return result;
+    }
+
+    /**
+     * True if the tags list contains a specified tag.
+     * @param tag The tag to check with.
+     * @return True if the tags list contains the tag.
+     */
+    public boolean containsTag(String tag) {
+        for (String s : _tags) {
+            if (s.equals(tag)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private final ArrayList<String> _tags;
