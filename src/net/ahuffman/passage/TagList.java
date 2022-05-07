@@ -50,15 +50,6 @@ public class TagList {
     }
 
     /**
-     * Gets the tag at the specified index.
-     * @param index The index to get at.
-     * @return The tag.
-     */
-    public String getTag(int index) {
-        return _tags.get(index);
-    }
-
-    /**
      * Removes the tag at the specific index.
      * @param index the index to remove at.
      * @throws InvalidTagException if the index is out of range.
@@ -93,6 +84,15 @@ public class TagList {
         else {
             _tags.remove(result.intValue());
         }
+    }
+
+    /**
+     * Gets the tag at the specified index.
+     * @param index The index to get at.
+     * @return The tag.
+     */
+    public String getTag(int index) {
+        return _tags.get(index);
     }
 
     /**
