@@ -1,12 +1,15 @@
 package net.ahuffman.passage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * A list of searchable tags.
  */
-public class TagList {
+public class TagList implements Iterable<String> {
     /**
      * Constructor.
      * @param data A list of tags.
@@ -127,4 +130,10 @@ public class TagList {
     }
 
     private final ArrayList<String> _tags;
+
+    @NotNull
+    @Override
+    public Iterator<String> iterator() {
+        return _tags.iterator();
+    }
 }
