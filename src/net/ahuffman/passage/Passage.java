@@ -43,6 +43,14 @@ public abstract class Passage implements Iterable<String> {
     }
 
     /**
+     * Gets the list of tags.
+     * @return The tags list.
+     */
+    public TagList getTags() {
+        return _tags;
+    }
+
+    /**
      * Saves the passage to the filepath. If the filepath doesn't exist, the file
      * is created. If it does, it is overwritten.
      * @param file the file to save to.
