@@ -47,8 +47,16 @@ public class TagList implements Iterable<String> {
     /**
      * Adds a tag to the list.
      * @param tag The tag to add.
+     * @throws InvalidTagException If the tag is null or contains an invalid character (space).
      */
-    public void addTag(String tag) {
+    public void addTag(String tag) throws InvalidTagException {
+        if (tag == null) {
+            throw new InvalidTagException("Cannot add a null value as a tag.");
+        }
+        else if (tag.contains("\s")) {
+            throw new InvalidTagException("Tags cannot contain a space character.");
+        }
+
         _tags.add(tag);
     }
 
