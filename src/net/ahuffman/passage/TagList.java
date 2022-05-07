@@ -59,6 +59,19 @@ public class TagList {
     }
 
     /**
+     * Removes the tag at the specific index.
+     * @param index the index to remove at.
+     * @throws InvalidTagException if the index is out of range.
+     */
+    public void removeTag(int index) throws InvalidTagException {
+        if (index < 0 || index >= _tags.size()) {
+            throw new InvalidTagException("Tag index out of bounds.");
+        }
+
+        _tags.remove(index);
+    }
+
+    /**
      * Return a list of all tags which start with a certain prefix.
      * @param prefix The prefix to check by.
      * @return An arraylist of all of the results.
