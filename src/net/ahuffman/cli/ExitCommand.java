@@ -6,14 +6,15 @@ package net.ahuffman.cli;
  */
 public class ExitCommand extends Command {
     private static final String NAME = "exit";
-    private static final String HELP = "";
+    private static final String SYNTAX = "";
+    private static final String HELP = "Exits the program.";
 
     public ExitCommand() {
-        super(NAME, HELP);
+        super(NAME, SYNTAX, HELP);
     }
 
     @Override
-    public Object execute(String args, Object[] input) throws InvalidCommandOperationException {
+    public Object execute(CommandArgs args, Object[] input) throws InvalidCommandOperationException {
         return null;
     }
 }

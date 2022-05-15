@@ -7,4 +7,8 @@ public class InvalidCommandOperationException extends RuntimeException {
     public InvalidCommandOperationException(String message){
         super(message);
     }
+
+    public InvalidCommandOperationException(Command c) {
+        super(c.helpText());
+    }
 }

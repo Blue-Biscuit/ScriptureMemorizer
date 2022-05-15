@@ -8,6 +8,8 @@ public class Interface {
         commands.add(new NewPassageCommand());
         commands.add(new ExitCommand());
         commands.add(new PrintCommand());
+        commands.add(new HelpCommand());
+        commands.add(new SaveCommand());
     }
 
     public static String getInput(String promptPattern, Scanner s) {
@@ -24,7 +26,7 @@ public class Interface {
     public static void main(String[] args) {
         ArrayList<Command> commands = new ArrayList<>();
         Scanner s;
-        PassagesList p;
+        PassagesList passagesList;
 
         // Setup scanner.
         s = new Scanner(System.in);
@@ -33,40 +35,45 @@ public class Interface {
         loadCommands(commands);
 
         // Setup list of passages.
-        p = new PassagesList();
+        passagesList = new PassagesList();
 
-        // Initialize the currently loaded command; this should be immediately overriden.
+        // Initialize the currently loaded command; this should be immediately overridden.
         Command dummy = new NewPassageCommand();
-        Command c = dummy;
+        Command command = dummy;
 
         // Command loop.
-        while (!c.getName().equals("exit")) {
+        while (!command.getName().equals("exit")) {
             UserInput input = new UserInput(getInput(">>> ", s));
 
             // Get the command.
-            c = null;
+            command = null;
             for (Command e : commands) {
                 if (e.getName().equals(input.getCommand())) {
-                    c = e;
+                    command = e;
                     break;
                 }
             }
 
             // Run commands.
             try {
-                if (c == null) {
+                if (command == null) {
                     System.out.printf("Unknown command: %s\n\n", input.getCommand());
-                    c = dummy;
-                } else if (c.getName().equals("print")) {
-                    c.execute(input.getArgs(), new Object[]{System.out, p});
-                } else {
-                    c.execute(input.getArgs(), new Object[]{p});
+                    command = dummy;
+                }
+                else if (command.getName().equals("print")) {
+                    command.execute(input.getArgs(), new Object[]{System.out, passagesList});
+                }
+                else if (command.getName().equals("help")) {
+                    command.execute(input.getArgs(), new Object[]{System.out, commands});
+                }
+                else {
+                    command.execute(input.getArgs(), new Object[]{passagesList});
                 }
                 System.out.println();
             }
             catch (InvalidCommandOperationException e) {
                 System.out.printf("%s\n\n", e.getMessage());
-                c = dummy;
+                command = dummy;
             }
         }
     }

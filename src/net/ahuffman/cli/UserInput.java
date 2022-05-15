@@ -28,14 +28,14 @@ public class UserInput {
 
         // If there is no space, then null the arguments portion and set the whole string to "command."
         if (firstSpace == -1) {
-            _args = null;
+            _args = new CommandArgs();
             _command = input;
         }
 
         // If there is a space, then set that which is before the space as "command" and after as "argument."
         else {
             _command = input.substring(0, firstSpace);
-            _args = input.substring(firstSpace + 1); // This shouldn't go out of bounds, since the string was trimmed.
+            _args = new CommandArgs(input.substring(firstSpace + 1)); // This shouldn't go out of bounds, since the string was trimmed.
         }
     }
 
@@ -59,13 +59,8 @@ public class UserInput {
      * Gets the arguments.
      * @return the arguments, or an empty string if the user hasn't provided them.
      */
-    public String getArgs() {
-        if (hasArgs()) {
-            return _args;
-        }
-        else {
-            return "";
-        }
+    public CommandArgs getArgs() {
+        return _args;
     }
 
     @Override
@@ -106,5 +101,5 @@ public class UserInput {
     }
 
     private final String _command;
-    private final String _args;
+    private final CommandArgs _args;
 }

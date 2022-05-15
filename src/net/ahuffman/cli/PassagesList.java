@@ -5,10 +5,7 @@ import net.ahuffman.passage.Passage;
 import net.ahuffman.passage.StringPassage;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -112,6 +109,14 @@ public class PassagesList {
      */
     public void add(Passage p) {
         _passages.add(p);
+    }
+
+    @Override
+    public String toString() {
+        StringWriter out = new StringWriter();
+        save(new PrintWriter(out));
+
+        return out.toString();
     }
 
     /**

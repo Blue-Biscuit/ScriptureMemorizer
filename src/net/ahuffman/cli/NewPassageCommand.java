@@ -5,39 +5,37 @@ import net.ahuffman.passage.StringPassage;
 
 public class NewPassageCommand extends Command {
     private static final String NAME = "new";
-    private static final String HELP = "<title> <passage text>";
+    private static final String SYNTAX = "<title> <passage text> (tags)...";
+    private static final String HELP = "Creates a new passage.";
 
     public NewPassageCommand() {
-        super(NAME, HELP);
+        super(NAME, SYNTAX, HELP);
     }
 
 
     @Override
-    public Object execute(String args, Object[] input) {
+    public Object execute(CommandArgs args, Object[] input) {
         if (!(input[0] instanceof PassagesList)) {
             throw new InvalidCommandOperationException("Internal error.");
         }
-        if (args.isEmpty()) {
-            throw new InvalidCommandOperationException(String.format("Usage: %s %s", getName(), getHelp()));
+        if (args.size() < 2) {
+            throw new InvalidCommandOperationException(this);
         }
 
         String name;
         String passage;
         Passage p;
-        int firstSpace;
-
-        // Get the first space in the string.
-        firstSpace = args.indexOf("\s");
-
-        // If firstSpace is not found, then return an error.
-        if (firstSpace == -1) {
-            throw new InvalidCommandOperationException(String.format("Usage: %s %s", getName(), getHelp()));
-        }
 
         // Split the arguments into two name and passage.
-        name = args.substring(0, firstSpace);
-        passage = args.substring(firstSpace + 1);
+        name = args.get(0);
+        passage = args.get(1);
         p = new StringPassage(name, passage);
+
+        // Add the rest of the arguments as tags.
+        for (int i = 2; i < args.size(); i++) {
+            p.getTags().addTag(args.get(i));
+        }
+
 
         ((PassagesList) input[0]).add(p);
 
