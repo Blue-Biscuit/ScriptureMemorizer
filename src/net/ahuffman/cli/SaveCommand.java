@@ -31,7 +31,7 @@ public class SaveCommand extends Command {
         // 1. Argument checking. If the input array does not have the passages list as its input,
         // throw an internal error.
 
-        if (input.length != 1 || !(input[0] instanceof PassagesList list)) {
+        if (input.length < 1 || !(input[0] instanceof PassagesList list)) {
             throw new InvalidCommandOperationException("Internal error.");
         }
 

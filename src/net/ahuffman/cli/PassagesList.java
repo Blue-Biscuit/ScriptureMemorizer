@@ -1,6 +1,7 @@
 package net.ahuffman.cli;
 
 import net.ahuffman.common.PeekingLineScanner;
+import net.ahuffman.passage.LoadPassageException;
 import net.ahuffman.passage.Passage;
 import net.ahuffman.passage.StringPassage;
 
@@ -27,37 +28,7 @@ public class PassagesList {
      * @throws LoadPassagesListException If loading the passage fails.
      */
     public PassagesList(PeekingLineScanner toLoad) throws LoadPassagesListException {
-        _passages = new ArrayList<>();
-        String passageTitle;
-        Passage passage;
-        final String TITLE_ID = "title: ";
-        final int TITLE_ID_LEN = 7;
-
-        // Algorithm:
-        // 1. While the scanner still has lines...
-            // a. If the next line of the scanner matches the title line introduction token...
-                // 1. Load the passage.
-                // 2. Add the passage to the passages list.
-
-        // 1. While the scanner still has lines...
-
-        while (toLoad.hasNextLine()) {
-
-            // a. If the next piece of the scanner matches the title line introduction token...
-
-                passageTitle = toLoad.peekNextLine();
-                if (passageTitle.startsWith(TITLE_ID)) {
-                    passageTitle = passageTitle.substring(TITLE_ID_LEN);
-
-                    // 1. Load the passage.
-
-                    passage = new StringPassage(passageTitle, toLoad);
-
-                    // 2. Add the passage to the passages list.
-
-                    _passages.add(passage);
-                }
-        }
+        load(toLoad);
     }
 
     /**
@@ -104,6 +75,62 @@ public class PassagesList {
     }
 
     /**
+     * Loads the passages list from a peeking scanner.
+     * @param toLoad Scanner to load from.
+     * @throws LoadPassagesListException If the source is corrupted.
+     */
+    public void load(PeekingLineScanner toLoad) throws LoadPassagesListException {
+        _passages = new ArrayList<>();
+        String passageTitle;
+        Passage passage;
+        final String TITLE_ID = "title: ";
+        final int TITLE_ID_LEN = 7;
+
+        // Algorithm:
+        // 1. While the scanner still has lines...
+        // a. If the next line of the scanner matches the title line introduction token...
+        // 1. Load the passage.
+        // 2. Add the passage to the passages list.
+
+        // 1. While the scanner still has lines...
+
+        while (toLoad.hasNextLine()) {
+
+            // a. If the next piece of the scanner matches the title line introduction token...
+
+            passageTitle = toLoad.peekNextLine();
+            if (passageTitle.startsWith(TITLE_ID)) {
+                passageTitle = passageTitle.substring(TITLE_ID_LEN);
+
+                // 1. Load the passage.
+
+                try {
+                    passage = new StringPassage(passageTitle, toLoad);
+                }
+                catch (LoadPassageException exp) {
+                    throw new LoadPassagesListException("Passages list source is corrupted.");
+                }
+
+                // 2. Add the passage to the passages list.
+
+                _passages.add(passage);
+            }
+            else {
+                toLoad.nextLine();
+            }
+        }
+    }
+
+    /**
+     * Loads the passages list from a peeking scanner.
+     * @param toLoad Scanner to load from.
+     * @throws LoadPassagesListException If the source is corrupted.
+     */
+    public void load(Scanner toLoad) throws LoadPassagesListException {
+        load(new PeekingLineScanner(toLoad));
+    }
+
+    /**
      * Adds a passage to the list.
      * @param p The passage to add.
      */
@@ -135,7 +162,7 @@ public class PassagesList {
         throw new NoSuchElementException(String.format("Passage entitled \"%s\" is not stored within the list.", name));
     }
 
-    private final ArrayList<Passage> _passages;
+    private ArrayList<Passage> _passages;
 
 
     /**
@@ -183,5 +210,6 @@ public class PassagesList {
         // 3. Load the list from a file.
 
         toLoad = new PassagesList(new Scanner(outFile));
+        System.out.println(toLoad);
     }
 }

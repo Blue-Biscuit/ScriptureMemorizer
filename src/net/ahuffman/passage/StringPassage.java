@@ -127,7 +127,7 @@ public class StringPassage extends Passage {
      * Loads a StringPassage from a scanner.
      * @param reader The scanner to read from.
      */
-    protected void loadFromScanner(PeekingLineScanner reader) {
+    protected void loadFromScanner(PeekingLineScanner reader) throws LoadPassageException {
         String passage = null;
         String tags = null;
         boolean foundLastLine = false;

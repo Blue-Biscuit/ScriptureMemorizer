@@ -10,6 +10,7 @@ public class Interface {
         commands.add(new PrintCommand());
         commands.add(new HelpCommand());
         commands.add(new SaveCommand());
+        commands.add(new LoadCommand());
     }
 
     public static String getInput(String promptPattern, Scanner s) {
