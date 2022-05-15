@@ -11,6 +11,7 @@ public class Interface {
         commands.add(new HelpCommand());
         commands.add(new SaveCommand());
         commands.add(new LoadCommand());
+        commands.add(new LearnCommand());
     }
 
     public static String getInput(String promptPattern, Scanner s) {
@@ -63,6 +64,9 @@ public class Interface {
                 }
                 else if (command.getName().equals("print")) {
                     command.execute(input.getArgs(), new Object[]{System.out, passagesList});
+                }
+                else if (command.getName().equals("learn")) {
+                    command.execute(input.getArgs(), new Object[]{passagesList, System.out, s});
                 }
                 else if (command.getName().equals("help")) {
                     command.execute(input.getArgs(), new Object[]{System.out, commands});

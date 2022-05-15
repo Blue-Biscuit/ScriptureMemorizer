@@ -4,17 +4,19 @@ import net.ahuffman.common.PeekingLineScanner;
 import net.ahuffman.passage.LoadPassageException;
 import net.ahuffman.passage.Passage;
 import net.ahuffman.passage.StringPassage;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
  * Simple data structure to hold a list of passages.
  */
-public class PassagesList {
+public class PassagesList implements Iterable<Passage> {
     /**
      * Default constructor. Initializes an empty list.
      */
@@ -211,5 +213,11 @@ public class PassagesList {
 
         toLoad = new PassagesList(new Scanner(outFile));
         System.out.println(toLoad);
+    }
+
+    @NotNull
+    @Override
+    public Iterator<Passage> iterator() {
+        return _passages.iterator();
     }
 }
