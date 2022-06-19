@@ -1,7 +1,5 @@
 package net.ahuffman.cli;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -114,7 +112,6 @@ public class CommandArgs implements Iterable<String> {
 
     }
 
-    @NotNull
     @Override
     public Iterator<String> iterator() {
         return _list.iterator();
