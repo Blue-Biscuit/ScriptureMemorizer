@@ -1,6 +1,5 @@
 package net.ahuffman.passage;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +59,7 @@ public class TagList implements Iterable<String> {
         if (tag == null) {
             throw new InvalidTagException("Cannot add a null value as a tag.");
         }
-        else if (tag.contains("\s")) {
+        else if (tag.matches(".*\\s.*")) {
             throw new InvalidTagException("Tags cannot contain a space character.");
         }
 
@@ -168,7 +167,6 @@ public class TagList implements Iterable<String> {
 
     private final ArrayList<String> _tags;
 
-    @NotNull
     @Override
     public Iterator<String> iterator() {
         return _tags.iterator();

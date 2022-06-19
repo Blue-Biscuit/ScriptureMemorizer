@@ -169,7 +169,7 @@ public class StringPassage extends Passage {
 
             // Load the tags
             TagList internalList = getTags();
-            String[] tList = tags.split("\s");
+            String[] tList = tags.split("\\s+");
             for(String e : tList) {
                 internalList.addTag(e);
             }
@@ -193,7 +193,7 @@ public class StringPassage extends Passage {
 
         _text = text.trim();
 
-        _words = _text.split("\s");
+        _words = _text.split("\\s+");
     }
 
     private String _text;

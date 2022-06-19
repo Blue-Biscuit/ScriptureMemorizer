@@ -4,7 +4,6 @@ import net.ahuffman.common.PeekingLineScanner;
 import net.ahuffman.passage.LoadPassageException;
 import net.ahuffman.passage.Passage;
 import net.ahuffman.passage.StringPassage;
-import org.jetbrains.annotations.NotNull;
 
 
 import java.io.*;
@@ -265,7 +264,6 @@ public class PassagesList implements Iterable<Passage> {
         System.out.println(toLoad);
     }
 
-    @NotNull
     @Override
     public Iterator<Passage> iterator() {
         return _passages.iterator();
