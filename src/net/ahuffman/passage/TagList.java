@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * A list of searchable tags.
@@ -27,13 +28,19 @@ public class TagList implements Iterable<String> {
     }
 
     /**
+     * Constructor.
+     * @param line A space-delineated line of tags.
+     */
+    public TagList(String line) {
+        _tags = new ArrayList<>(List.of(line.split("\\s")));
+    }
+
+    /**
      * Default constructor.
      */
     public TagList() {
         _tags = new ArrayList<>();
     }
-
-
 
 
     /**
@@ -120,6 +127,28 @@ public class TagList implements Iterable<String> {
         });
 
         return result;
+    }
+
+    /**
+     * Prints the tags list in easily readable format.
+     * @return The string representation.
+     */
+    @Override
+    public String toString() {
+        if (_tags.size() > 0) {
+            StringBuilder builder = new StringBuilder();
+
+            int to = _tags.size() - 1;
+            for (int i = 0; i < to - 1; i++) {
+                builder.append(_tags.get(i)).append(' ');
+            }
+            builder.append(_tags.get(to));
+
+            return builder.toString();
+        }
+        else {
+            return "";
+        }
     }
 
     /**

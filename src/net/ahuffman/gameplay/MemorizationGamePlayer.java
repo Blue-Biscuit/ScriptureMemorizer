@@ -25,7 +25,7 @@ public class MemorizationGamePlayer {
      * @return Whether this turn was a success or a fail.
      */
     public boolean next(String input) {
-        boolean result = _game.matches(input);
+        boolean result = _game.matches(input) == MemorizationGame.A_MATCH;
 
         if (result) {
             successes++;

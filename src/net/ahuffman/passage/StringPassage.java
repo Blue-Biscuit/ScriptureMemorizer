@@ -1,6 +1,8 @@
 package net.ahuffman.passage;
 
 
+import net.ahuffman.common.PeekingLineScanner;
+
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +20,12 @@ public class StringPassage extends Passage {
         super(title);
 
         load(text);
+    }
+
+    public StringPassage(String title, PeekingLineScanner s) {
+        super(title);
+
+        loadFromScanner(s);
     }
 
     public StringPassage(String title, File file) {
@@ -96,24 +104,36 @@ public class StringPassage extends Passage {
 
     @Override
     protected void loadFromFile(File file) throws LoadPassageException {
-        Scanner reader;
 
-        // Get the file.
+        // Open the file, and call the method to load from a scanner.
         try {
-            reader = new Scanner(file);
+            loadFromScanner(new PeekingLineScanner(new Scanner(file)));
         }
         catch (FileNotFoundException e) {
             throw new LoadPassageException("File does not exist");
         }
+    }
 
-        // find the passage within the database file.
+    /**
+     * The same as loadFromFile, except using a String rather than a file.
+     * @param text The String text to load from.
+     * @throws LoadPassageException If the passage could not be loaded from the text.
+     */
+    protected void loadFromText(String text) {
+        loadFromScanner(new PeekingLineScanner(new Scanner(text)));
+    }
+
+    /**
+     * Loads a StringPassage from a scanner.
+     * @param reader The scanner to read from.
+     */
+    protected void loadFromScanner(PeekingLineScanner reader) throws LoadPassageException {
         String passage = null;
         String tags = null;
         boolean foundLastLine = false;
         boolean loadedPassageLastLine = false;
         String line;
 
-        // While everything has not yet been loaded and the file hasn't finished...
         while (tags == null && reader.hasNextLine()) {
             line = reader.nextLine().trim();
 
@@ -125,7 +145,7 @@ public class StringPassage extends Passage {
                     foundLastLine = false;
                 }
                 catch (IndexOutOfBoundsException e) {
-                    throw new LoadPassageException("Passage file is corrupted.");
+                    throw new LoadPassageException("Passage reader is corrupted.");
                 }
             }
 
