@@ -1,5 +1,6 @@
 package net.ahuffman.cli;
 
+import net.ahuffman.common.StringHelpers;
 import net.ahuffman.passage.Passage;
 import net.ahuffman.passage.TagList;
 
@@ -19,6 +20,14 @@ public class PrintCommand extends Command {
 
     @Override
     public Object execute(CommandArgs args, Object[] input) throws InvalidCommandOperationException {
+        // 1. Internal argument checking. Make sure that a PrintStream and the passages list is passed in by
+        // input[].
+        // 2. User argument checking. If none, print every passage.
+        // 3. Otherwise, execute as normally.
+
+        // 1. Internal argument checking. Make sure that a PrintStream and the passages list is passed in by
+        // input[].
+
         if (!(input[0] instanceof PrintStream w)) {
             throw new InvalidCommandOperationException("Expected a PrintStream as internal command input.");
         }
@@ -26,38 +35,47 @@ public class PrintCommand extends Command {
             throw new InvalidCommandOperationException("Expected a PassagesList as second internal command input.");
         }
 
+        // 2. User argument checking. If none, print every passage.
+
         if (args.isEmpty()) {
-            System.out.printf("%s\n", (p));
+
+            p.forEach(passage -> {
+                w.printf("%s\n", passage.getTitle());
+            });
+
         }
+
+        // 3. Otherwise, execute as normally.
+
         else {
+            // 1. Fetch the passage to print, whether it be a name or an index. If not found, report.
+            // 2. Print the passage data.
 
-            String nameToPrint;
-            Passage toPrint;
+            final String strToPrint = args.get(0);
+            final Passage toPrint;
 
+            // 1. Fetch the passage to print, whether it be a name or an index. If not found, report.
 
-            // Find the name to print.
-            nameToPrint = args.get(0);
-
-            // Find the correct passage.
-            toPrint = p.get(nameToPrint);
-
-            // Print the passage to the scanner, if it is found. Otherwise, throw.
-            if (toPrint == null) {
-                throw new InvalidCommandOperationException(String.format("Passage \"%s\" not found.", nameToPrint));
-            } else {
-                w.printf("%s\n\"%s\"\nTags: ", toPrint.getTitle(), toPrint.fullText());
-
-                TagList tags = toPrint.getTags();
-                int numTags = tags.numTags();
-
-                if (numTags > 0) {
-                    for (int i = 0; i < numTags - 1; i++) {
-                        w.printf("%s ", tags.getTag(i));
-                    }
-                    w.printf("%s", tags.getTag(numTags - 1));
-                }
-                w.println();
+            if (p.hasName(strToPrint)) {
+                toPrint = p.get(strToPrint);
             }
+            else if (StringHelpers.isInt(strToPrint)) {
+                final int pIndex = Integer.parseInt(strToPrint) - 1;
+
+                if (pIndex >= 0 && pIndex < p.size()) {
+                    toPrint = p.at(pIndex);
+                }
+                else {
+                    throw new InvalidCommandOperationException( String.format("Passage number %d is out of range; there are %d passages.", pIndex + 1, p.size()) );
+                }
+            }
+            else {
+                throw new InvalidCommandOperationException( String.format("Passage \"%s\" not found.", strToPrint) );
+            }
+
+            // 2. Print the passage data.
+
+            w.printf("\n%s\n\n%s\n\n", toPrint.getTitle(), toPrint.fullText());
         }
 
         return null;

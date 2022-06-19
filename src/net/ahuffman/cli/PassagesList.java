@@ -140,6 +140,41 @@ public class PassagesList implements Iterable<Passage> {
         _passages.add(p);
     }
 
+    /**
+     * Returns the subset of passages with the specified tag.
+     * @param tag The tag to get by.
+     * @return The subset.
+     * @throws NullPointerException If the given tag is null.
+     */
+    public PassagesList byTag(String tag) throws NullPointerException{
+        PassagesList result = new PassagesList();
+
+        // Algorithm:
+        // 1. If tag is null, throw.
+        // 2. For each element in the array, if the tags list contains the given tag, add to the result.
+        // 3. Return the result.
+
+
+
+        // 1. If tag is null, throw.
+
+        if (tag == null) {
+            throw new NullPointerException("Tag was null.");
+        }
+
+        // 2. For each element in the array, if the tags list contains the given tag, add to the result.
+
+        forEach(e -> {
+           if (e.getTags().containsTag(tag)) {
+               result.add(e);
+           }
+        });
+
+        // 3. Return the result.
+
+        return result;
+    }
+
     @Override
     public String toString() {
         StringWriter out = new StringWriter();
@@ -162,6 +197,21 @@ public class PassagesList implements Iterable<Passage> {
         }
 
         throw new NoSuchElementException(String.format("Passage entitled \"%s\" is not stored within the list.", name));
+    }
+
+    /**
+     * Determines if the passages list has a passage of the given name.
+     * @param name The name to check for.
+     * @return True if the name is in the list.
+     */
+    public boolean hasName(String name) {
+        for (Passage e : _passages) {
+            if (e.getTitle().equals(name)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private ArrayList<Passage> _passages;
@@ -219,5 +269,13 @@ public class PassagesList implements Iterable<Passage> {
     @Override
     public Iterator<Passage> iterator() {
         return _passages.iterator();
+    }
+
+    public int size() {
+        return _passages.size();
+    }
+
+    public Passage at(int rank) throws IndexOutOfBoundsException {
+        return _passages.get(rank);
     }
 }

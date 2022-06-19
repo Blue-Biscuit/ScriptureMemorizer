@@ -1,5 +1,8 @@
 package net.ahuffman.cli;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,6 +15,7 @@ public class Interface {
         commands.add(new SaveCommand());
         commands.add(new LoadCommand());
         commands.add(new LearnCommand());
+        commands.add(new BlankCommand());
     }
 
     public static String getInput(String promptPattern, Scanner s) {
@@ -29,9 +33,16 @@ public class Interface {
         ArrayList<Command> commands = new ArrayList<>();
         Scanner s;
         PassagesList passagesList;
+        final String encoding;
 
         // Setup scanner.
-        s = new Scanner(System.in);
+        encoding = "UTF-8";
+        s = new Scanner(System.in, encoding);
+        try {
+            System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, encoding));
+        } catch (Exception ignored) {
+            System.out.println("didn't work");
+        }
 
         // Load the commands.
         loadCommands(commands);
@@ -46,6 +57,11 @@ public class Interface {
         // Command loop.
         while (!command.getName().equals("exit")) {
             UserInput input = new UserInput(getInput(">>> ", s));
+
+            if (input.getCommand().equals("λογος")) {
+                System.out.println("Can input unicode");
+            }
+
 
             // Get the command.
             command = null;
@@ -65,7 +81,7 @@ public class Interface {
                 else if (command.getName().equals("print")) {
                     command.execute(input.getArgs(), new Object[]{System.out, passagesList});
                 }
-                else if (command.getName().equals("learn")) {
+                else if (command.getName().equals("learn") || command.getName().equals("blank")) {
                     command.execute(input.getArgs(), new Object[]{passagesList, System.out, s});
                 }
                 else if (command.getName().equals("help")) {

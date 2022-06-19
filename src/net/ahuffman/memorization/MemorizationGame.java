@@ -7,6 +7,11 @@ import net.ahuffman.passage.Passage;
  */
 public abstract class MemorizationGame {
     /**
+     * The value match() returns on a match.
+     */
+    public static final int A_MATCH = -1;
+
+    /**
      * Constructor
      * @param p The passage upon which to play the memorization game
      * @throws NullPointerException if the passage argument is null
@@ -41,14 +46,31 @@ public abstract class MemorizationGame {
     /**
      * True if the input string matches the passage
      * @param input the input string
-     * @return true if the string matches, false otherwise (or if input is null)
+     * @return A_MATCH if it's a match, or the location of the first error, otherwise.
      */
-    public boolean matches(String input) {
+    public int matches(String input) {
         if (input == null) {
-            return false;
+            throw new NullPointerException("Input cannot be null.");
         }
 
-        return _passage.fullText().equals(input.trim());
+        String passage = _passage.fullText();
+        boolean matches = _passage.fullText().equals(input.trim());
+
+        if (matches) {
+            return A_MATCH;
+        }
+        else {
+            int errLocation;
+
+            for (errLocation = 0; errLocation < input.length() && errLocation < passage.length(); errLocation++) {
+                if (passage.charAt(errLocation) != input.charAt(errLocation)) {
+                    break;
+                }
+            }
+
+            return errLocation;
+        }
+
     }
 
     protected Passage _passage;
